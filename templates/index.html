@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Keyword Extractor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Article Keyword Extractor</h1>
+        <p>Extract key topics from news articles using AI</p>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <form id="searchForm">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Enter a topic to search for articles..." required>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Fetching and analyzing articles...</p>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <div id="resultsContainer" class="results-container">
+            <!-- Results will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

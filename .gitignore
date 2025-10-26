@@ -1,0 +1,33 @@
+# Virtual Environment
+.venv
+env/
+venv/
+*.pyenv/
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Database files (if using SQLite)
+*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
+
+# Uploaded files (if your app handles file uploads)
+uploads/
+
+# Configuration files that might contain sensitive information
+.env
+config.pyc
