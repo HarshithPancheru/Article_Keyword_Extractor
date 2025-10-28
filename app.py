@@ -9,17 +9,47 @@ keyword_extractor = ArticleKeywordExtractor()
 def home():
     return render_template('index.html')
 
-@app.route('/search', methods=['POST'])
-def search():
-    data = request.get_json()
-    query = data.get('query', '')
-    
-    if not query:
-        return jsonify({'error': 'Query is required'}), 400
-    
+@app.route('/articles')
+def get_articles():
     try:
-        results = keyword_extractor.process_articles(query)
-        return jsonify(results)
+        page = request.args.get('page', 1, type=int)
+        articles = keyword_extractor.fetch_articles(page=page)
+        processed_articles = []
+        
+        for article in articles:
+            if article.get('content') and article.get('title'):
+                keywords = keyword_extractor.extract_keywords(article['title'] + ' ' + article['content'])
+                processed_articles.append({
+                    'title': article['title'],
+                    'description': article['description'],
+                    'url': article['url'],
+                    'urlToImage': article.get('urlToImage'),
+                    'keywords': keywords
+                })
+                
+        return jsonify(processed_articles)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/articles/keyword/<keyword>')
+def get_articles_by_keyword(keyword):
+    try:
+        page = request.args.get('page', 1, type=int)
+        articles = keyword_extractor.fetch_articles(keyword=keyword, page=page)
+        processed_articles = []
+        
+        for article in articles:
+            if article.get('content') and article.get('title'):
+                keywords = keyword_extractor.extract_keywords(article['title'] + ' ' + article['content'])
+                processed_articles.append({
+                    'title': article['title'],
+                    'description': article['description'],
+                    'url': article['url'],
+                    'urlToImage': article.get('urlToImage'),
+                    'keywords': keywords
+                })
+                
+        return jsonify(processed_articles)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

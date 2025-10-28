@@ -15,23 +15,31 @@ class ArticleKeywordExtractor:
         # Load spaCy model
         self.nlp = spacy.load('en_core_web_sm')
 
-    def fetch_articles(self, query, language='en', sort_by='relevancy', page_size=10):
+    def fetch_articles(self, language='en', page=1, page_size=20, keyword=None):
         """
-        Fetch articles from NewsAPI based on the query
+        Fetch articles from NewsAPI with pagination
         """
         try:
-            articles = self.newsapi.get_everything(
-                q=query,
-                language=language,
-                sort_by=sort_by,
-                page_size=page_size
-            )
+            if keyword:
+                articles = self.newsapi.get_everything(
+                    q=keyword,
+                    language=language,
+                    page=page,
+                    page_size=page_size,
+                    sort_by='relevancy'
+                )
+            else:
+                articles = self.newsapi.get_top_headlines(
+                    language=language,
+                    page=page,
+                    page_size=page_size
+                )
             return articles['articles']
         except Exception as e:
             print(f"Error fetching articles: {e}")
             return []
 
-    def extract_keywords(self, text, num_keywords=5):
+    def extract_keywords(self, text, num_keywords=7):
         """
         Extract keywords from text using spaCy NLP
         """
@@ -47,23 +55,3 @@ class ArticleKeywordExtractor:
         # Count occurrences and get most common keywords
         word_freq = Counter(keywords)
         return [word for word, _ in word_freq.most_common(num_keywords)]
-
-    def process_articles(self, query, num_keywords=5):
-        """
-        Fetch articles and extract keywords from each
-        """
-        articles = self.fetch_articles(query)
-        results = []
-        
-        for article in articles:
-            # Combine title and content for better keyword extraction
-            text = f"{article['title']} {article['description'] or ''}"
-            keywords = self.extract_keywords(text, num_keywords)
-            
-            results.append({
-                'title': article['title'],
-                'url': article['url'],
-                'keywords': keywords
-            })
-        
-        return results

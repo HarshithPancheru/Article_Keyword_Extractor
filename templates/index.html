@@ -14,13 +14,8 @@
     </header>
 
     <div class="container">
-        <div class="search-container">
-            <form id="searchForm">
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Enter a topic to search for articles..." required>
-                    <button type="submit">Search</button>
-                </div>
-            </form>
+        <div class="articles-header">
+            <!-- <h2>Today's Top Articles</h2> -->
         </div>
 
         <div id="loading" class="loading">
@@ -29,7 +24,7 @@
         </div>
 
         <div id="errorMessage" class="error-message"></div>
-
+        <h2 id="section-header"></h2>
         <div id="resultsContainer" class="results-container">
             <!-- Results will be dynamically inserted here -->
         </div>
