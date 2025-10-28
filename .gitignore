@@ -3,6 +3,7 @@
 env/
 venv/
 *.pyenv/
+*.code-workspace
 
 # Python compiled files
 __pycache__/
