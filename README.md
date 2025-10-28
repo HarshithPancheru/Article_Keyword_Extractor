@@ -36,10 +36,10 @@ python main.py
 ```
 
 The program will:
-1. Prompt you for a search topic
-2. Fetch relevant articles
-3. Extract keywords from each article
-4. Display the results with article titles, URLs, and extracted keywords
+1. Fetch relevant articles
+2. Extract keywords from each article
+3. Display the results with article titles, URLs, and extracted keywords
+4. When keyword is clicked, it will display articles related to that keyword
 
 ## How it Works
 
